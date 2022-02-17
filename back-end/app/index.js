@@ -3,6 +3,7 @@ const mysql = require('mysql2');
 const router = require('./routes/routes');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express()
 

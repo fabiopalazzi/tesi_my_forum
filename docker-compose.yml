@@ -6,17 +6,19 @@ services:
       context: ./back-end
       dockerfile: Dockerfile_app
     ports: 
-      - 3000:3000
+      - ${BACKEND_PORT_IN}:${BACKEND_PORT_OUT}
     depends_on: 
       - mysql_server
   
   mysql_server:
     image: mysql:8.0
+    env_file:
+      - ./.env
     environment: 
-      - MYSQL_DATABASE=forum
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=123456
-      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
