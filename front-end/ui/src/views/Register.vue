@@ -77,7 +77,7 @@ export default {
   },
   created(){
     if(localStorage.token.length == 128){
-        this.axios.get('http://localhost:3000/api/user/auth', { headers: { Authorization: `Bearer ${localStorage.token}` }})
+        this.axios.get( process.env.VUE_APP_ROOT_API + '/user/auth', { headers: { Authorization: `Bearer ${localStorage.token}` }})
                     .then((response) => {
                         if(response.status == 200)
                             this.$router.push('User')   
@@ -98,7 +98,7 @@ export default {
                 "surname": this.surname,
                 "country": "Italy"
             }
-            this.axios.post('http://localhost:3000/api/user/register', data)
+            this.axios.post( process.env.VUE_APP_ROOT_API + '/user/register', data)
                 .then( response => {
                 if(response.status==200) //subscribed
                     this.$router.push('Login?subscribed=true')

@@ -183,7 +183,7 @@ export default {
     },
     created(){
         if(localStorage.token.length == 128){
-            this.axios.get('http://localhost:3000/api/user/auth', { headers: { Authorization: `Bearer ${localStorage.token}` }})
+            this.axios.get( process.env.VUE_APP_ROOT_API + '/user/auth', { headers: { Authorization: `Bearer ${localStorage.token}` }})
                         .catch(() => 
                             {
                                 this.$router.push('Login?failed=true')   
@@ -206,7 +206,7 @@ export default {
         addPost(){
             this.axios({
                 method: 'post',
-                url: 'http://localhost:3000/api/post',
+                url:  process.env.VUE_APP_ROOT_API + '/post',
                 headers: { Authorization: `Bearer ${localStorage.token}` },
                 data: {
                     "title": this.title,

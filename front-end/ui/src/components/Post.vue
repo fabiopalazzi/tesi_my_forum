@@ -104,7 +104,7 @@ export default{
             if(this.searchText==""){ //with empty value
                 this.axios({
                     method: 'get',
-                    url: 'http://localhost:3000/api/post/' + this.post.length,
+                    url:  process.env.VUE_APP_ROOT_API + '/post/' + this.post.length,
                     headers: { Authorization: `Bearer ${localStorage.token}` }
                 })
                 .then((response) => {
@@ -124,7 +124,7 @@ export default{
             }else{
                 this.axios({
                     method: 'get',
-                    url: 'http://localhost:3000/api/post/' + this.post.length + '/' +this.searchText,
+                    url:  process.env.VUE_APP_ROOT_API + '/post/' + this.post.length + '/' +this.searchText,
                     headers: { Authorization: `Bearer ${localStorage.token}` }
                 })
                 .then((response) => {
@@ -146,7 +146,7 @@ export default{
             var description = document.getElementById('new_comment_' + post_id).value
             this.axios({
             method: 'post',
-            url: 'http://localhost:3000/api/comment',
+            url:  process.env.VUE_APP_ROOT_API + '/comment',
             data: {
                     "post_id": post_id,
                     "description": description
@@ -178,7 +178,7 @@ export default{
         loadComment(post_id){
             this.axios({
             method: 'get',
-            url: 'http://localhost:3000/api/comment/' + post_id,
+            url:  process.env.VUE_APP_ROOT_API + '/comment/' + post_id,
             headers: { Authorization: `Bearer ${localStorage.token}` }
             })
             .then((response) => {
@@ -196,7 +196,7 @@ export default{
         addLike(post_id){
             this.axios({
                 method: 'post',
-                url: 'http://localhost:3000/api/like',
+                url:  process.env.VUE_APP_ROOT_API + '/like',
                 data: {
                         "post_id": post_id
                 },
@@ -221,7 +221,7 @@ export default{
         removeLike(post_id){
             this.axios({
                 method: 'delete',
-                url: 'http://localhost:3000/api/like',
+                url:  process.env.VUE_APP_ROOT_API + '/like',
                 data: {
                         "like_id": this.like[post_id]
                 },

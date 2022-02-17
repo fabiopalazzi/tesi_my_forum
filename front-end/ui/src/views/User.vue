@@ -144,7 +144,7 @@ export default {
   },
   created(){
       if(localStorage.token.length == 128){
-        this.axios.get('http://localhost:3000/api/user/auth', { headers: { Authorization: `Bearer ${localStorage.token}` }})
+        this.axios.get( process.env.VUE_APP_ROOT_API + '/user/auth', { headers: { Authorization: `Bearer ${localStorage.token}` }})
                     .catch(() => 
                         {
                             this.$router.push('Login?failed=true')   
@@ -162,7 +162,7 @@ export default {
   methods: {
       //logout and delete token
     logout(){
-        this.axios.delete('http://localhost:3000/api/user/auth', { headers: { Authorization: `Bearer ${localStorage.token}` }})
+        this.axios.delete( process.env.VUE_APP_ROOT_API + '/user/auth', { headers: { Authorization: `Bearer ${localStorage.token}` }})
         localStorage.token = ''
         this.$router.push('login')
     },

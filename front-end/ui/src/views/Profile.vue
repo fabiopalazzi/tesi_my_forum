@@ -222,7 +222,7 @@ export default {
   },
   created(){
       if(localStorage.token.length == 128){
-      this.axios.get('http://localhost:3000/api/user/auth', { headers: { Authorization: `Bearer ${localStorage.token}` }})
+      this.axios.get( process.env.VUE_APP_ROOT_API + '/user/auth', { headers: { Authorization: `Bearer ${localStorage.token}` }})
                 .catch(() => 
                     {
                         this.$router.push('Login?failed=true')   
@@ -239,7 +239,7 @@ export default {
   methods: {
       //logout and delete token
       logout(){
-          this.axios.delete('http://localhost:3000/api/user/auth', { headers: { Authorization: `Bearer ${localStorage.token}` }})
+          this.axios.delete( process.env.VUE_APP_ROOT_API + '/user/auth', { headers: { Authorization: `Bearer ${localStorage.token}` }})
           localStorage.token = ''
           this.$router.push('login')
       },
@@ -249,7 +249,7 @@ export default {
       updateName(){
           this.axios({
             method: 'put',
-            url: 'http://localhost:3000/api/user/name',
+            url:  process.env.VUE_APP_ROOT_API + '/user/name',
             data: {
                     "name": this.name,
             },
@@ -269,7 +269,7 @@ export default {
       updateSurname(){
           this.axios({
             method: 'put',
-            url: 'http://localhost:3000/api/user/surname',
+            url:  process.env.VUE_APP_ROOT_API + '/user/surname',
             data: {
                     "surname": this.surname,
             },
@@ -291,7 +291,7 @@ export default {
       updatePwd(){ //check old password and save the new
           this.axios({
             method: 'put',
-            url: 'http://localhost:3000/api/user/pwd',
+            url:  process.env.VUE_APP_ROOT_API + '/user/pwd',
             data: {
                     "old_pwd": this.old_pwd,
                     "new_pwd": this.new_pwd
