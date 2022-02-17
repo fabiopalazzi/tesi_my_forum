@@ -3,7 +3,6 @@ const mysql = require('mysql2');
 const router = require('./routes/routes');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-require('dotenv').config();
 
 const app = express()
 
@@ -20,7 +19,6 @@ app.use(router)
 app.get('/', function (req, res) {
   res.send('hello world')
 })
-
 /*
 app.get('/connect', function (req, res) {
   con =  mysql.createConnection(mysqlConfig);
