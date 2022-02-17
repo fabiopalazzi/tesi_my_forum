@@ -6,12 +6,12 @@ I’ve also used a npm (node package manager) to manage all dependencies. My nod
 
 To build environment locally:
 
+### Optional
 <aside>
 1️⃣ Install Docker Engine (if it hasn’t already installed): instruction on [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
-
 </aside>
 
+### Mandatory
 <aside>
 2️⃣ Run docker-compose up in root of project: backend environment will be so initialized
-
 </aside>
