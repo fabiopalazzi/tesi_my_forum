@@ -3,8 +3,8 @@ version: "3.8"
 services:
   app:
     build: 
-      context: ./back-end
-      dockerfile: Dockerfile_app
+      context: .
+      dockerfile: Dockerfile
     ports: 
       - ${BACKEND_PORT_IN}:${BACKEND_PORT_OUT}
     depends_on: 
