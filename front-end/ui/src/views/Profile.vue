@@ -221,8 +221,8 @@ export default {
       }
   },
   created(){
-      if(localStorage.token.length == 128){
-      this.axios.get( process.env.VUE_APP_ROOT_API + '/user/auth', { headers: { Authorization: `Bearer ${localStorage.token}` }})
+      if(localStorage.token != undefined && localStorage.token.length == 128){
+        this.axios.get( process.env.VUE_APP_ROOT_API + '/user/auth', { headers: { Authorization: `Bearer ${localStorage.token}` }})
                 .catch(() => 
                     {
                         this.$router.push('Login?failed=true')   

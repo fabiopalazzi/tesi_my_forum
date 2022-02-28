@@ -28,10 +28,10 @@ exports.deleteToken = ((req, res) => {
     const bearerHeader = req.headers['authorization'];
     const bearer = bearerHeader.split(' ')
     if (bearer[0] == "Bearer") {
-        const bearerToken = bearer[1];
+        const bearerToken = connection.escape(bearer[1]);
         //control bearer token is valid
         const sql = `DELETE FROM user_access
-                    WHERE token = '` + bearerToken + `';`
+                    WHERE token = ` + bearerToken + `;`
         connection.query(sql, function (err, result) {
         if (err) res.sendStatus(403)
         if (result.affectedRows == 0 ) res.sendStatus(401)
@@ -48,9 +48,9 @@ exports.checkToken = ((req,res) => {
     const bearerHeader = req.headers['authorization'];
     const bearer = bearerHeader.split(' ')
     if (bearer[0] == "Bearer") {
-        const bearerToken = bearer[1];
+        const bearerToken = connection.escape(bearer[1]);
         //control bearer token is valid
-        const sql = `SELECT COUNT(*) as line_count FROM user_access WHERE token= '` + bearerToken + `'
+        const sql = `SELECT COUNT(*) as line_count FROM user_access WHERE token= ` + bearerToken + `
           AND expired_date >= '` + new Date().toISOString().slice(0, 19).replace('T', ' ') + `';`
         connection.query(sql, function (err, result) {
         if (err) res.sendStatus(403)

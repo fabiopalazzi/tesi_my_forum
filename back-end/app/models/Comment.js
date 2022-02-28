@@ -7,8 +7,8 @@ exports.addComment = ((req, res) => {
 })
 function insertComment(user_id, req, res){
     const sql = `INSERT INTO comment_content (creation_date, description, post_id, user_id )` +
-                ` VALUES ('` + new Date().toISOString().slice(0, 19).replace('T', ' ') + `','` 
-                + req.body.description + `','` + req.body.post_id + `','` + user_id + `');`
+                ` VALUES ('` + new Date().toISOString().slice(0, 19).replace('T', ' ') + `',` 
+                + connection.escape(req.body.description) + `,` + connection.escape(req.body.post_id) + `,'` + user_id + `');`
     connection.query(sql, function (err, result) {
         if (err) res.sendStatus(403)
         else res.sendStatus(200)
@@ -23,7 +23,7 @@ function searchLastComment(user_id, req, res){
     const sql = `SELECT name, surname, id, description ` +
                 `FROM comment_content C` +
                 ` JOIN user U ON U.mail = C.user_id` +
-                ` WHERE post_id='` + req.params.post_id + `'` + 
+                ` WHERE post_id=` + connection.escape(req.params.post_id) + 
                 ` ORDER BY creation_date DESC;`
     connection.query(sql, function (err, result) {
         if (err) res.sendStatus(403)

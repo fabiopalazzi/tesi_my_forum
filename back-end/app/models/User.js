@@ -6,8 +6,8 @@ const token_verification = require('./validate_token')
 //check user credential
 exports.checkUser = ((req, res)=>{
     const sql = `SELECT * FROM user
-                WHERE mail='` + req.body.mail + `' AND
-                PASSWORD ='` + crypto.createHash('sha256').update(req.body.pwd).digest('base64') + `'`;            
+                WHERE mail=` + connection.escape(req.body.mail) + ` AND
+                PASSWORD ='` + crypto.createHash('sha256').update(req.body.pwd).digest('base64') + `';`;            
     connection.query(sql, function (err, result) {
       if (err) throw err
       if (result.length==0)
@@ -22,11 +22,11 @@ exports.checkUser = ((req, res)=>{
 //register user
 exports.addUser = (req, res) => {
   const sql = `INSERT INTO user (mail, password, name, surname, country) VALUES ` + 
-              `('` + req.body.mail + `',` +
+              `(` + connection.escape(req.body.mail) + `,` +
               `'` + crypto.createHash('sha256').update(req.body.pwd).digest('base64') + `',` +
-              `'` + req.body.name + `',` +
-              `'` + req.body.surname + `',` +
-              `'` + req.body.country + `');`;
+              connection.escape(req.body.name) + `,` +
+              connection.escape(req.body.surname) + `,` +
+              connection.escape(req.body.country) + `);`;
   connection.query(sql, function (err, result, fields) {
       if (err) res.sendStatus(403)
       else res.sendStatus(200)
@@ -63,7 +63,7 @@ exports.updateName = ((req, res) => {
   token_verification.validToken(req, res, updateAuthName)
 })
 function updateAuthName(user_id, req, res){
-  const sql = `UPDATE user SET name = '` + req.body.name + `' WHERE mail='` + user_id + `';`
+  const sql = `UPDATE user SET name = ` + connection.escape(req.body.name) + ` WHERE mail='` + user_id + `';`
   connection.query(sql, function (err, result) {
     if (err) res.sendStatus(403)
     else if(result.affectedRows==0) res.sendStatus(404)
@@ -76,7 +76,7 @@ exports.updateSurname = ((req, res) => {
   token_verification.validToken(req, res, updateAuthSurname)
 })
 function updateAuthSurname(user_id, req, res){
-  const sql = `UPDATE user SET surname = '` + req.body.surname + `' WHERE mail='` + user_id + `';`
+  const sql = `UPDATE user SET surname = ` + connection.escape(req.body.surname) + ` WHERE mail='` + user_id + `';`
   connection.query(sql, function (err, result) {
     if (err) res.sendStatus(403)
     else if(result.affectedRows==0) res.sendStatus(404)

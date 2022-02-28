@@ -10,10 +10,10 @@ exports.addPost = (req,res) => {
 function insertPostAuth(user_id, req, res){
     const sql = `INSERT INTO post VALUES ('` + 
                 token.getToken() + `','` + 
-                new Date().toISOString().slice(0, 19).replace('T', ' ') + `','` + 
-                req.body.topic + `','` + 
-                req.body.title + `','` +
-                req.body.description + `','` + 
+                new Date().toISOString().slice(0, 19).replace('T', ' ') + `',` + 
+                connection.escape(req.body.topic) + `,` + 
+                connection.escape(req.body.title) + `,` +
+                connection.escape(req.body.description) + `,'` + 
                 user_id + `');`
     connection.query(sql, function (err, result) {
     if (err) res.sendStatus(403)
@@ -26,7 +26,7 @@ exports.deletePost = (req,res) => {
 }
 //delete post
 function deletePostAuth(user_id, req, res){
-    const sql = `DELETE FROM post WHERE post_id='` + req.body.post_id + `' AND user_id = '` + user_id + `';`
+    const sql = `DELETE FROM post WHERE post_id=` + connection.escape(req.body.post_id) + ` AND user_id = '` + user_id + `';`
     connection.query(sql, function (err, result) {
     if (err) res.sendStatus(403)
     else if(result.affectedRows==0) res.sendStatus(404)
@@ -87,7 +87,7 @@ function getSearchedPost(user_id, req, res){
     ) AS comment_count
     FROM ( 
     SELECT post_id, topic, title, description, user_id FROM post
-    WHERE CONCAT(title,topic,description) LIKE '%` + req.params.search_text + `%'
+    WHERE CONCAT(title,topic,description) LIKE '%` + connection.escape(req.params.search_text).substring(1,length-1) + `%'
     ORDER BY creation_date
     LIMIT 10 OFFSET ` + req.params.offset + `
     ) P

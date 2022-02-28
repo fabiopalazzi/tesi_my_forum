@@ -4,14 +4,14 @@ exports.validToken = ((req, res, _callback) => {
     const bearerHeader = req.headers['authorization'];
     const bearer = bearerHeader.split(' ')
     if (bearer[0] == "Bearer") {
-        const bearerToken = bearer[1];
+        const bearerToken = connection.escape(bearer[1]);
         //control bearer token is valid
         const sql = `SELECT user_id
                     FROM user_access
-                    WHERE token = '` + bearerToken + `';`
+                    WHERE token = ` + bearerToken + `;`
         connection.query(sql, function (err, result) {
         if (err) res.sendStatus(403)
-        if (result.length == 0 ) res.sendStatus(401)
+        else if (result.length == 0 ) res.sendStatus(401)
         //if all is ok call function specified to manage data
         else _callback(result[0].user_id, req, res)
     })
