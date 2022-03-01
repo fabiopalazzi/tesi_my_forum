@@ -70,6 +70,7 @@ exports.getSearchedPost  = (req, res) => {
     token_verification.validToken(req, res, getSearchedPost)
 }
 function getSearchedPost(user_id, req, res){
+    const escaping_search = connection.escape(req.params.search_text);
     const sql = `SELECT P.post_id, P.topic, P.title, P.description, P.user_id, U.name, U.surname,
     (
         SELECT COUNT(*) FROM like_content
@@ -87,7 +88,7 @@ function getSearchedPost(user_id, req, res){
     ) AS comment_count
     FROM ( 
     SELECT post_id, topic, title, description, user_id FROM post
-    WHERE CONCAT(title,topic,description) LIKE '%` + connection.escape(req.params.search_text).substring(1,length-1) + `%'
+    WHERE CONCAT(title,topic,description) LIKE '%` + escaping_search.substring(1,escaping_search.length-1) + `%'
     ORDER BY creation_date
     LIMIT 10 OFFSET ` + req.params.offset + `
     ) P

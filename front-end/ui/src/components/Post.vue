@@ -137,7 +137,6 @@ export default{
                         var post_id = response.data[i].post_id
                         this.comment[post_id] = false
                         this.like[post_id]= response.data[i].id_like
-                        this.like[post_id]
                     }
                 })
             }

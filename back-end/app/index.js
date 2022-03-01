@@ -2,13 +2,27 @@ const express = require('express')
 const mysql = require('mysql2');
 const router = require('./routes/routes');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+const cors = require('cors')
+const helmet = require('helmet')
 require('dotenv').config()
 
 const app = express()
 
-app.use(cors())
+//Prevent prototype pollution
+Object.freeze(Object)
+Object.freeze(Object.prototype)
+/*Prevent this example of attack
+let a = {c:15}
+console.log(a.toString())
+let b = {c:20}
+b.__proto__.toString = ()=>{console.log('hacked')}
+b.toString()
+a.toString()*/
 
+//helmet package prevent XSS scripting
+app.use(helmet.xssFilter(),helmet.contentSecurityPolicy())
+
+app.use(cors())
 
 app.use(express.json())
 app.use(express.urlencoded())
