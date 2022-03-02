@@ -2,7 +2,20 @@
 
 Front-end part has been developed using vue.js language.
 
-To run locally front-end part, go to /front-end/ui and type 
+To run locally front-end part
+
+<aside>
+ 
+:mag_right: Go to /front-end/ui and type 
+  
+<aside>
+
+<aside>
+:bulb: npm install vue-cli
+  
+</aside>
+
+then
 
 <aside>
 🖊️ npm install
