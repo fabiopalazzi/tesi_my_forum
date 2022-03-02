@@ -28,10 +28,10 @@
                                                 v-model="pwd" placeholder="Password">
                                         </div>
                                         <div v-if="auth_fail" class="alert alert-danger form-control-user" role="alert">
-                                        Dati errati!
+                                        {{danger_message}}
                                         </div>
                                         <div v-if="empty_input" class="alert alert-warning form-control-user" role="alert">
-                                        Compilare tutti i campi
+                                        {{error_message}}
                                         </div>
                                         <div v-if="subscribed" class="alert alert-success form-control-user" role="alert">
                                         Registrazione avvenuta con successo
@@ -66,6 +66,8 @@ export default {
         email: '',
         response: '',
         alert_message:'',
+        error_message:'',
+        danger_message: '',
         auth_fail : false,
         empty_input : false,
         subscribed : false,
@@ -81,6 +83,7 @@ export default {
     }
     if(this.$route.query.failed){
         this.auth_fail = true
+        this.danger_message = 'Attenzione, devi riautenticarti!'
         setTimeout(() => this.auth_fail = false, 5000)
     }
     if(this.$route.query.subscribed){
@@ -90,27 +93,34 @@ export default {
   },
   methods:{
       checkAuth(){
-        if(this.email == '' || this.pwd == '')
+        this.auth_fail = false
+        if(this.email == '' || this.pwd == ''){
             this.empty_input = true
+            this.error_message = 'Compilare tutti i campi!'
+        }
         else{
           this.empty_input = false
           const data = {"mail":this.email, "pwd":this.pwd}
-          console.log(data)
           this.axios
             .post( process.env.VUE_APP_ROOT_API + '/user/auth', data)
             .then(response => {
-                    if(response.status==200){
+                if(response.status==200){
                     localStorage.token = response.data.token
                     localStorage.email = this.email
                     localStorage.name = response.data.name
                     localStorage.surname = response.data.surname
                     this.$router.push('User')
-                }else{
-                    this.auth_fail = true
                 }
             })
-            .catch(() => {
-                this.auth_fail = true
+            .catch((error) => {
+                if(error.response.status == 401){
+                    this.danger_message = error.response.data.message
+                    this.auth_fail = true
+
+                }else if (error.response.status == 403){
+                    this.error_message = error.response.data.message
+                    this.empty_input = true
+                }
             })
         }
       },

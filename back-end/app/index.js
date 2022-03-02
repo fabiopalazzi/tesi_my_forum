@@ -3,7 +3,6 @@ const mysql = require('mysql2');
 const router = require('./routes/routes');
 const bodyParser = require('body-parser');
 const cors = require('cors')
-const helmet = require('helmet')
 require('dotenv').config()
 
 const app = express()
@@ -19,8 +18,6 @@ b.__proto__.toString = ()=>{console.log('hacked')}
 b.toString()
 a.toString()*/
 
-//helmet package prevent XSS scripting
-app.use(helmet.xssFilter(),helmet.contentSecurityPolicy())
 
 app.use(cors())
 

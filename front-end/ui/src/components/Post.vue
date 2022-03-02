@@ -7,17 +7,20 @@
                 <div class="card-body">
                     <div class="row" style="margin-bottom:10px;">
                         <img src="../assets/undraw_profile.svg" style="vertical-align:middle; margin-right:10px"/>
-                        <h1 class="h4 mb-0 text-warning">@{{p.name}}_{{p.surname}}</h1>
+                        <h1 class="h4 mb-0 text-warning">@</h1>
+                        <h1 class="h4 mb-0 text-warning" v-html="p.name"></h1>
+                        <h1 class="h4 mb-0 text-warning" v-html="p.surname"></h1>
                     </div>
                     <div class="row">
-                        <h1 class="h3 text-gray-800" id="title">{{p.title}} </h1>
+                        <h1 class="h3 text-gray-800" id="title" v-html="p.title"></h1>
                     </div>
                     <div class="row">
-                        <h1 class="h5 mb-0 text-blue-800" id="topic">#{{p.topic}} </h1>
+                        <h1 class="h5 mb-0 text-blue-800">#</h1>
+                        <h1 class="h5 mb-0 text-blue-800" id="topic" v-html="p.topic"></h1>
                     </div>
                     <hr>
                     <div class="row">
-                        <h1 class="h5 mb-2 text-gray-800">{{p.description}}</h1> <!-- buttarci utente e resto -->
+                        <h1 class="h5 mb-2 text-gray-800" v-html="p.description"></h1> <!-- buttarci utente e resto -->
                     </div>
                     <hr>
                     <div class="row">
@@ -46,9 +49,10 @@
                             <div class="card-body">
                                 <div class="row">
                                     <img src="../assets/undraw_profile.svg" style="vertical-align:middle; margin-right:10px"/>
-                                    <h1 class="h4 mb-0 text-warning">{{c.name}}_{{c.surname}}</h1>
+                                    <h1 class="h4 mb-0 text-warning" v-html="c.name"></h1>
+                                    <h1 class="h4 mb-0 text-warning" v-html="c.surname"></h1>
                                 </div>
-                                <h1 class="h5 mb-2 text-gray-800">{{c.description}} </h1>
+                                <h1 class="h5 mb-2 text-gray-800" v-html="c.description"></h1>
                             </div>
                         </div>
                         <div class="card border-left-info">

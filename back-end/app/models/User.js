@@ -9,9 +9,10 @@ exports.checkUser = ((req, res)=>{
                 WHERE mail=` + connection.escape(req.body.mail) + ` AND
                 PASSWORD ='` + crypto.createHash('sha256').update(req.body.pwd).digest('base64') + `';`;            
     connection.query(sql, function (err, result) {
-      if (err) throw err
-      if (result.length==0)
-        res.sendStatus(401) //non autorizzato
+      if (err || result.length==0)
+        res.status(401).send({
+          message: 'Dati non validi'
+        }) //non autorizzato
       else{
         //create token to user
         UserToken.createUserToken(req.body.mail, res, result[0])
@@ -28,7 +29,9 @@ exports.addUser = (req, res) => {
               connection.escape(req.body.surname) + `,` +
               connection.escape(req.body.country) + `);`;
   connection.query(sql, function (err, result, fields) {
-      if (err) res.sendStatus(403)
+      if (err) res.status(403).send({
+        message: 'Attenzione! I valori inseriti sono probabilmente errati o la mail è già stata utilizzata!'
+      })
       else res.sendStatus(200)
   })
 }
@@ -43,15 +46,15 @@ function updateAuthPwd(user_id, req,res){
               `WHERE mail='` + user_id + `' AND password='` +  
               crypto.createHash('sha256').update(req.body.old_pwd).digest('base64') + `';`
   connection.query(sql, function (err, result) {
-    if (err) res.sendStatus(301)
-    else if(result[0].num!=1) res.sendStatus(301)
+    if (err) res.status(301).send({message: 'Password errata!'})
+    else if(result[0].num!=1) res.status(301).send({message: 'Password errata!'})
     else{ //password is corretct
       const sql = `UPDATE user SET password = '` + 
       crypto.createHash('sha256').update(req.body.new_pwd).digest('base64') + 
       `' WHERE mail='` + user_id + `';`
       connection.query(sql, function (err, result) {
-        if (err) res.sendStatus(403)
-        else if(result.affectedRows==0) res.sendStatus(404)
+        if (err) res.status(403).send({message: 'Errore, riprova!'})
+        else if(result.affectedRows==0) res.status(404).send({message: 'Password non cambiata'})
         else res.sendStatus(200)
         })
     }

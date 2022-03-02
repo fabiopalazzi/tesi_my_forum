@@ -62,7 +62,8 @@
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-lg-inline text-gray-600 small">{{name}} {{surname}}</span>
+                                    <span class="mr-2 d-lg-inline text-gray-600 small" v-html="name"></span>
+                                    <span class="mr-2 d-lg-inline text-gray-600 small" v-html="surname"></span>
                                     <img class="img-profile rounded-circle"
                                         src="../assets/undraw_profile.svg">
                                 </a>

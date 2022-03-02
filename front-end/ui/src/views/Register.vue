@@ -103,7 +103,9 @@ export default {
                 if(response.status==200) //subscribed
                     this.$router.push('Login?subscribed=true')
                 })
-                .catch( this.alert_message="Email già utilizzata")
+                .catch( error => {
+                    this.alert_message=error.response.data.message
+                })
         }
       },
       goToLogin(){

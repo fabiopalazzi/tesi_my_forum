@@ -1,7 +1,6 @@
 const connection = require('./db')
 const token = require('./create_random_token')
 const token_verification = require('./validate_token')
-
 exports.addPost = (req,res) => {
     token_verification.validToken(req, res, insertPostAuth)
 }

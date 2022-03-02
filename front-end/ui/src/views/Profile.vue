@@ -62,7 +62,8 @@
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-lg-inline text-gray-600 small">{{name}} {{surname}}</span>
+                                    <span class="mr-2 d-lg-inline text-gray-600 small" v-html="name"></span>
+                                    <span class="mr-2 d-lg-inline text-gray-600 small" v-html="surname"></span>
                                     <img class="img-profile rounded-circle"
                                         src="../assets/undraw_profile.svg">
                                 </a>
@@ -102,7 +103,7 @@
                                         <!-- Name -->
                                         <div class="form-group row">
                                             <div class="col-sm-7 mb-sm-2">
-                                                <input type="text" class="form-control form-control-user" v-model="name" @click="this.name_success=false; this.name_error=false"
+                                                <input type="text" class="form-control form-control-user" v-html="name" v-model="name" @click="this.name_success=false; this.name_error=false"
                                                     placeholder="Nome">
                                             </div>
                                             <div class="col-sm-5 mb-sm-2">
@@ -123,7 +124,7 @@
                                         <!-- Surname -->
                                         <div class="form-group row">
                                             <div class="col-sm-7 mb-sm-2">
-                                                <input type="text" class="form-control form-control-user" v-model="surname" @click="this.surname_success=false; this.surname_error=false"
+                                                <input type="text" class="form-control form-control-user" v-html="surname" v-model="surname" @click="this.surname_success=false; this.surname_error=false"
                                                     placeholder="Cognome">
                                             </div>
                                             <div class="col-sm-5 mb-sm-2">

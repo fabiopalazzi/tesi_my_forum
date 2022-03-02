@@ -61,7 +61,8 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{name}} {{surname}}</span>
+                                <span class="mr-2 d-lg-inline text-gray-600 small" v-html="name"></span>
+                                <span class="mr-2 d-lg-inline text-gray-600 small" v-html="surname"></span>
                                 <img class="img-profile rounded-circle"
                                     src="../assets/undraw_profile.svg">
                             </a>
@@ -122,7 +123,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div v-if="error_request" class="alert alert-danger" role="alert">
-                                            Errore, riprova!
+                                            {{error_message}}
                                         </div>
                                         </div>
                                     </div>
@@ -165,6 +166,7 @@ export default {
             toggled: true,
             ok_request : false,
             error_request : false,
+            error_message: '',
             title: '',
             content: '',
             topic: '',
@@ -196,6 +198,11 @@ export default {
         this.name = localStorage.name
     },
     methods:{
+        logout(){
+            this.axios.delete( process.env.VUE_APP_ROOT_API + '/user/auth', { headers: { Authorization: `Bearer ${localStorage.token}` }})
+            localStorage.token = ''
+            this.$router.push('login')
+        },
         resetAlert(){
             this.ok_request = false
             this.error_request = false
@@ -217,10 +224,11 @@ export default {
             .then((response) => {
                 if(response.status==200)
                     this.ok_request = true
-                else
-                    this.error_request = true
             })
-            .catch(() => this.error_request = true)
+            .catch((error) => {
+                this.error_request = true
+                this.error_message = error.response.data.message  
+            })
         }
     }
 }

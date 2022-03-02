@@ -1,33 +1,42 @@
 const controller = require('../controllers/controllers')
 const express = require('express')
 
+const { check} = require('express-validator');
+
 const router = express.Router()
 
 // ** USER  ** //
 //login
 router.post('/api/user/auth/', controller.login)
 
-//login
+//logout
 router.delete('/api/user/auth/', controller.logout)
 
 //Check token validity
 router.get('/api/user/auth', controller.checkToken)
 
 //register
-router.post('/api/user/register/', controller.register)
+router.post('/api/user/register/',
+            check('name').escape(),
+            check('surname').escape(),
+            controller.register)
 
 //update name
-router.put('/api/user/name', controller.updateName)
+router.put('/api/user/name', check('name').escape(), controller.updateName)
 
 //update surname
-router.put('/api/user/surname', controller.updateSurname)
+router.put('/api/user/surname', check('surname').escape(), controller.updateSurname)
 
 //update pwd
 router.put('/api/user/pwd', controller.updatePwd)
 
 // ** POST ** //
 //add post
-router.post('/api/post/', controller.addPost)
+router.post('/api/post/', 
+            check('title').escape(), 
+            check('topic').escape(), 
+            check('description').escape(),
+            controller.addPost)
 
 //delete post
 router.delete('/api/post/', controller.deletePost)
@@ -39,7 +48,7 @@ router.get('/api/post/:offset', controller.getLastPost)
 router.get('/api/post/:offset/:search_text', controller.getSearchedPost)
 
 // ** LIKE CONTENT **/
-//add like
+//add like [NO ESCAPE BECAUSE ID IS AN INTEGER VALUE]
 router.post('/api/like/', controller.addLike)
 
 //remove like
@@ -50,6 +59,6 @@ router.delete('/api/like/', controller.removeLike)
 router.get('/api/comment/:post_id', controller.getComment)
 
 //add like
-router.post('/api/comment/', controller.addComment)
+router.post('/api/comment/', check('description').escape(), controller.addComment)
 
 module.exports = router;
