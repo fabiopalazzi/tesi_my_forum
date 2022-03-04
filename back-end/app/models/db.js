@@ -8,7 +8,6 @@ const mysqlConfig = {
     database: process.env.MYSQL_DATABASE
 }
 const connection =  mysql.createConnection(mysqlConfig);
-console.log(mysqlConfig)
 connection.connect(function(err) {
     if (err) throw err
     console.log("Connected to MySQL db")
