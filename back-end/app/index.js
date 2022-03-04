@@ -5,20 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors')
 require('dotenv').config()
 
-const app = express()
-
-//Prevent prototype pollution
-Object.freeze(Object)
-Object.freeze(Object.prototype)
-/*Prevent this example of attack
-let a = {c:15}
-console.log(a.toString())
-let b = {c:20}
-b.__proto__.toString = ()=>{console.log('hacked')}
-b.toString()
-a.toString()*/
-
-
+var app = express()
 app.use(cors())
 
 app.use(express.json())
@@ -26,13 +13,8 @@ app.use(express.urlencoded())
 
 app.use(router)
 
-// respond with "hello world" when a GET request is made to the homepage
-
-app.get('/', function (req, res) {
-  res.send('hello world')
-})
-
 app.listen(process.env.BACKEND_PORT_IN)
 
 console.log("listening on port " + process.env.BACKEND_PORT_IN)
+
 

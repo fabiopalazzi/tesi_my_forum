@@ -5,6 +5,11 @@ const { check} = require('express-validator');
 
 const router = express.Router()
 
+//** MAIN PAGE  **  //
+router.get('/', (req, res) => {
+    res.send('Server MyForum is ON')
+  })
+
 // ** USER  ** //
 //login
 router.post('/api/user/auth/', controller.login)
