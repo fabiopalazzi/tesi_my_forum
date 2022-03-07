@@ -6,12 +6,30 @@ I’ve also used a npm (node package manager) to manage all dependencies. My nod
 
 To build environment locally:
 
-### Optional
 <aside>
 1️⃣ Install Docker Engine (if it hasn’t already installed): instruction on [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
+
 </aside>
 
-### Mandatory
 <aside>
-2️⃣ Run docker-compose up in root of project: backend environment will be so initialized
+2️⃣ Create .env files: one located into backend folder and one into folder app. These files has to be equal and composed like:
+
+```jsx
+MYSQL_DATABASE= // name of db
+MYSQL_USER= // user of db
+MYSQL_PASSWORD=123456 // pwd
+MYSQL_ROOT_PASSWORD= // root pwd
+MYSQL_HOST=mysql_server
+
+BACKEND_PORT_IN=3000 // docker port IN
+BACKEND_PORT_OUT=3000 // docker port OUT
+```
+
+The first env file is used by docker engine to setup ports and mysql environment. The second is used by node js to get parameter to establish a connection with mysql container.
+
+</aside>
+
+<aside>
+3️⃣ Run docker-compose up in root of project: backend environment will be so initialized
+
 </aside>
