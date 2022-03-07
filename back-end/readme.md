@@ -12,6 +12,7 @@ To build environment locally:
 </aside>
 
 <aside>
+  
 2️⃣ Create .env files: one located into backend folder and one into folder app. These files has to be equal and composed like:
 
 ```jsx
