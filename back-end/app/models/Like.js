@@ -7,8 +7,10 @@ exports.addLike = ((req,res) => {
 
 function insertLikeAuth(user_id, req, res){
     const sql  = `INSERT INTO like_content (post_id, user_id)
-                VALUES (` + connection.escape(req.body.post_id) + `,'` + user_id + `');`
-    connection.query(sql, function (err, result) {
+                VALUES ( ?,'` + user_id + `');`
+    connection.query(sql, [
+        req.body.post_id,
+    ], function (err, result) {
         if (err) res.sendStatus(403)
         else res.send(JSON.stringify(result))
     })
@@ -19,13 +21,12 @@ exports.removeLike = ((req, res) => {
 })
 
 function deleteLikeAuth(user_id, req, res){
-    const sql  = `DELETE FROM like_content WHERE id='` + connection.escape(req.body.like_id) + `';`
-    connection.query(sql, function (err, result) {
+    const sql  = `DELETE FROM like_content WHERE id=?;`
+    connection.query(sql,
+    [
+        req.body.like_id
+    ],function (err, result) {
         if (err) res.sendStatus(403)
         else res.send(JSON.stringify(result))
     })
 }
-
-
-exports.getLikePost = ((req, res) => {
-})

@@ -5,10 +5,14 @@ const token_verification = require('./validate_token')
 
 //check user credential
 exports.checkUser = ((req, res)=>{
-    const sql = `SELECT * FROM user
-                WHERE mail=` + connection.escape(req.body.mail) + ` AND
-                PASSWORD ='` + crypto.createHash('sha256').update(req.body.pwd).digest('base64') + `';`;            
-    connection.query(sql, function (err, result) {
+    connection.query(`SELECT * FROM user
+      WHERE mail= ? AND
+      password = ? ;`,
+      [
+        req.body.mail, 
+        crypto.createHash('sha256').update(req.body.pwd).digest('base64')
+      ],
+      function (err, result) {
       if (err || result.length==0)
         res.status(401).send({
           message: 'Dati non validi'
@@ -23,12 +27,16 @@ exports.checkUser = ((req, res)=>{
 //register user
 exports.addUser = (req, res) => {
   const sql = `INSERT INTO user (mail, password, name, surname, country) VALUES ` + 
-              `(` + connection.escape(req.body.mail) + `,` +
-              `'` + crypto.createHash('sha256').update(req.body.pwd).digest('base64') + `',` +
-              connection.escape(req.body.name) + `,` +
-              connection.escape(req.body.surname) + `,` +
-              connection.escape(req.body.country) + `);`;
-  connection.query(sql, function (err, result, fields) {
+              `( ?, ?, ?, ?, ?);`;
+  connection.query(sql,
+    [
+      req.body.mail,
+      crypto.createHash('sha256').update(req.body.pwd).digest('base64'),
+      req.body.name,
+      req.body.surname,
+      req.body.country
+    ],
+    function (err, result, fields) {
       if (err) res.status(403).send({
         message: 'Attenzione! I valori inseriti sono probabilmente errati o la mail è già stata utilizzata!'
       })
@@ -43,9 +51,10 @@ exports.updatePwd = ((req, res) => {
 function updateAuthPwd(user_id, req,res){
   //check old password
   const sql = `SELECT COUNT(*) as num FROM user ` + 
-              `WHERE mail='` + user_id + `' AND password='` +  
-              crypto.createHash('sha256').update(req.body.old_pwd).digest('base64') + `';`
-  connection.query(sql, function (err, result) {
+              `WHERE mail='` + user_id + `' AND password=? ;`
+  connection.query(sql,
+    [crypto.createHash('sha256').update(req.body.old_pwd).digest('base64')], 
+    function (err, result) {
     if (err) res.status(301).send({message: 'Password errata!'})
     else if(result[0].num!=1) res.status(301).send({message: 'Password errata!'})
     else{ //password is corretct
@@ -66,8 +75,10 @@ exports.updateName = ((req, res) => {
   token_verification.validToken(req, res, updateAuthName)
 })
 function updateAuthName(user_id, req, res){
-  const sql = `UPDATE user SET name = ` + connection.escape(req.body.name) + ` WHERE mail='` + user_id + `';`
-  connection.query(sql, function (err, result) {
+  const sql = `UPDATE user SET name =? WHERE mail='` + user_id + `';`
+  connection.query(sql,
+    [req.body.name],
+    function (err, result) {
     if (err) res.sendStatus(403)
     else if(result.affectedRows==0) res.sendStatus(404)
     else res.sendStatus(200)
@@ -79,8 +90,10 @@ exports.updateSurname = ((req, res) => {
   token_verification.validToken(req, res, updateAuthSurname)
 })
 function updateAuthSurname(user_id, req, res){
-  const sql = `UPDATE user SET surname = ` + connection.escape(req.body.surname) + ` WHERE mail='` + user_id + `';`
-  connection.query(sql, function (err, result) {
+  const sql = `UPDATE user SET surname = ? WHERE mail='` + user_id + `';`
+  connection.query(sql,
+    [req.body.surname],
+    function (err, result) {
     if (err) res.sendStatus(403)
     else if(result.affectedRows==0) res.sendStatus(404)
     else res.sendStatus(200)

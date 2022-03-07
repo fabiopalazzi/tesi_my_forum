@@ -91,7 +91,7 @@ exports.addLike = (req, res) => {
     else LikeContent.addLike(req,res)
 }
 exports.removeLike = (req, res) => {
-    if(req.body.post_id == undefined || req.body.post_id.length == 0)
+    if(req.body.like_id == undefined || req.body.like_id.length == 0)
         res.status(400).send({
             message: 'Id non valido!'
         })
