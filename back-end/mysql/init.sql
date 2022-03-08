@@ -5,7 +5,7 @@ USE forum;
 
 CREATE TABLE IF NOT EXISTS `user` (
     `mail` VARCHAR(51) UNIQUE NOT NULL,
-    `password` VARCHAR(51) NOT NULL,
+    `password` VARCHAR(81) NOT NULL, -- pwd in bcrypt is max 72 --
     `name` VARCHAR(21) NOT NULL,
     `surname` VARCHAR(21) NOT NULL,
     `country` ENUM('Italy','France', 'Germany', 'USA', 'Spain', 'England'),

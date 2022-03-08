@@ -55,7 +55,7 @@ exports.updateSurname = ((req,res) => {
         })
 })
 exports.updatePwd = ((req,res) => {
-    if(req.body.new_pwd == undefined || req.body.new_pwd.length == 0) 
+    if(req.body.old_pwd == undefined || req.body.old_pwd.length == 0 || req.body.new_pwd == undefined || req.body.new_pwd.length == 0) 
         res.sendStatus(400)
     else User.updatePwd(req,res)
 }) //** end USER API */

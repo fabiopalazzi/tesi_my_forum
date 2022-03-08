@@ -1,25 +1,23 @@
 const connection = require('./db')
-const crypto = require('crypto')
+const hashAndSale = require('../hash/hash_and_sale.js')
 const UserToken = require('./UserToken')
 const token_verification = require('./validate_token')
 
 //check user credential
 exports.checkUser = ((req, res)=>{
     connection.query(`SELECT * FROM user
-      WHERE mail= ? AND
-      password = ? ;`,
+      WHERE mail= ?`,
       [
-        req.body.mail, 
-        crypto.createHash('sha256').update(req.body.pwd).digest('base64')
+        req.body.mail,
       ],
       function (err, result) {
-      if (err || result.length==0)
+      if (err || result.length==0 || !hashAndSale.decrypt(req.body.pwd, result[0].password))
         res.status(401).send({
           message: 'Dati non validi'
         }) //non autorizzato
       else{
-        //create token to user
-        UserToken.createUserToken(req.body.mail, res, result[0])
+          //create token to user
+          UserToken.createUserToken(req.body.mail, res, result[0])
       }
     })
 }) 
@@ -31,7 +29,7 @@ exports.addUser = (req, res) => {
   connection.query(sql,
     [
       req.body.mail,
-      crypto.createHash('sha256').update(req.body.pwd).digest('base64'),
+      hashAndSale.encrypt(req.body.pwd),
       req.body.name,
       req.body.surname,
       req.body.country
@@ -50,23 +48,23 @@ exports.updatePwd = ((req, res) => {
 })
 function updateAuthPwd(user_id, req,res){
   //check old password
-  const sql = `SELECT COUNT(*) as num FROM user ` + 
-              `WHERE mail='` + user_id + `' AND password=? ;`
-  connection.query(sql,
-    [crypto.createHash('sha256').update(req.body.old_pwd).digest('base64')], 
+  const sql = `SELECT * FROM user ` + 
+              `WHERE mail='` + user_id + `';`
+  connection.query(sql, 
     function (err, result) {
-    if (err) res.status(301).send({message: 'Password errata!'})
-    else if(result[0].num!=1) res.status(301).send({message: 'Password errata!'})
-    else{ //password is corretct
-      const sql = `UPDATE user SET password = '` + 
-      crypto.createHash('sha256').update(req.body.new_pwd).digest('base64') + 
-      `' WHERE mail='` + user_id + `';`
-      connection.query(sql, function (err, result) {
-        if (err) res.status(403).send({message: 'Errore, riprova!'})
-        else if(result.affectedRows==0) res.status(404).send({message: 'Password non cambiata'})
-        else res.sendStatus(200)
-        })
-    }
+      if (err || !hashAndSale.decrypt(req.body.old_pwd, result[0].password)) //pwd not valid
+        res.status(301).send({message: 'Password errata!'})
+      else{ //password is correct
+        const sql = `UPDATE user SET password = ?` +
+        ` WHERE mail='` + user_id + `';`
+        connection.query(sql, [
+          hashAndSale.encrypt(req.body.new_pwd)
+        ], function (err, result) {
+          if (err) res.status(403).send({message: 'Errore, riprova!'})
+          else if(result.affectedRows==0) res.status(404).send({message: 'Password non cambiata'})
+          else res.sendStatus(200)
+          })
+      }
   })
 }
 
