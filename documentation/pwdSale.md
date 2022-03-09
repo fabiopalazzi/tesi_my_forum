@@ -19,6 +19,6 @@ exports.encrypt = (secret_value) => {
 
 exports.decrypt = (insert_value, diggest) => {
     //value returned is true or false
-    return bcrypt.compareSync(insert_value, hash)
+    return bcrypt.compareSync(insert_value, diggest)
 }
 ```
