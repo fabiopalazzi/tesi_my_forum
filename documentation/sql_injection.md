@@ -2,4 +2,4 @@
 
 è una tecnica di code injection, usata per attaccare applicazioni che gestiscono dati attraverso database relazionali sfruttando il linguaggio SQL. Il mancato controllo dell'input dell'utente permette di inserire artificiosamente delle stringhe di codice SQL che saranno eseguite dal db: grazie a questo meccanismo è possibile far eseguire comandi SQL anche molto complessi, dall'alterazione dei dati (es. creazione di nuovi utenti) al download completo dei contenuti nel database. Per prevenire la sql injection, ho utilizzato il metodo escape() della classe MySql.Connection a cui va passato la stringa da analizzare. Questo metodo si occuperà quindi di andare a ricercare la presenza nella stringa di sequenze di caratteri sospette e in tal caso eliminarle. Ogni tipo di codice sql malevolo inviato verrà eliminato dalla stringa e non verrà eseguito dal db.
 
-Esempio di attacco: [https://github.com/fabiopalazzi/tesi_my_forum/blob/master/vulnerable-back-end/app/test/sql_injection.js](Approfondimento)
+Esempio di attacco: [Approfondimento](https://github.com/fabiopalazzi/tesi_my_forum/blob/master/vulnerable-back-end/app/test/sql_injection.js)
