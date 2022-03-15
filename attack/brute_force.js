@@ -18,5 +18,5 @@ lineReader.eachLine('./src/pwd_list.txt',(line)=>{
         console.log("I've got this valid session token [ " + response.data.token + " ]")
         process.exit()
     })
-    .catch((error)=>{}) //CODE IS NOT 200
+    .catch((error)=>{}) //IF CODE IS NOT 200
 })
