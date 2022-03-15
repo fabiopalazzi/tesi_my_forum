@@ -7,8 +7,13 @@ Un hacker fa in modo che un utente vittima invii involontariamente una richiesta
 Supponiamo che l'utente A si sia autenticato al sito “www.ilmiocontobancario.it” per l'accesso alle operazioni sul suo conto bancario. Il sito “www.ilmiocontobancario.it” ha un form
  per i versamenti che, nel momento in cui invieremo i dati, richiederà una pagina del tipo ”*www.ilmiocontobancario.it/versamento?importo=XXXX&destinatario=XXXX*
 ;” ad esempio: l'utente B invia ad A, eventualmente attraverso la sua email
-, un tag img html al fine di caricare automaticamente il contenuto del link come se fosse un'immagine come il seguente: *<IMG src='www.ilmiocontobancario.it/... versamento?importo=1000E&destinatario=B'>*
-. Quando A tenterà di accedere all'immagine, il browser invierà di fatto una richiesta HTTP alla pagina web indicata cercando di caricare l'immagine. Il sito *www.ilmiocontobancario.it* rileverà, tramite il cookie, che la richiesta arriva effettivamente da A e perciò autorizzerà l'operazione.
+, un tag img html al fine di caricare automaticamente il contenuto del link come se fosse un'immagine come il seguente: 
+
+```html
+<IMG src='www.ilmiocontobancario.it/... versamento?importo=1000E&destinatario=B'>
+```
+
+Quando A tenterà di accedere all'immagine, il browser invierà di fatto una richiesta HTTP alla pagina web indicata cercando di caricare l'immagine. Il sito *www.ilmiocontobancario.it* rileverà, tramite il cookie, che la richiesta arriva effettivamente da A e perciò autorizzerà l'operazione.
 
 Questo attacco sfrutta quindi una vulnerabilità relativa ai cookie: quando inviamo una richiesta verso un server, tutti i cookie salvati nel browser associabili a quell’URL, vengono automaticamente inviati.
 
