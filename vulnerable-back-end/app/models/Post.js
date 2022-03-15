@@ -15,7 +15,6 @@ function insertPostAuth(user_id, req, res){
                 req.body.title + `','` +
                 req.body.description + `','` + 
                 user_id + `');`
-                console.log(sql)
     connection.query(sql, function (err, result) {
     if (err) res.sendStatus(403)
     else res.sendStatus(200)
