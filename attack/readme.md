@@ -1,6 +1,6 @@
 # Attack Folder
 
-Questa cartella contiene script per attaccare il back-end e sottrarre informazioni o dati sensibili o eludere alcuni meccanismi di sicrezza.
+Questa cartella contiene script per attaccare il back-end e sottrarre informazioni o dati sensibili o eludere alcuni meccanismi di sicurezza.
 
 Troviamo script divisi per tipologia di attacco.
 
