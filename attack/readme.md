@@ -10,9 +10,9 @@ Gli attacchi sono efficaci al back-end vulnerabile ed in quanto tale le richiest
 
 Prima di eseguire gli attacchi:
 
-- All’interno della cartella attack digitare
+- All’interno della cartella vulnerable-back-end
 
-```Avviare il vulnerable-back-end
+```jsx
 docker-compose up;
 ```
 
