@@ -22,4 +22,4 @@ npm install --save
 node nome_script
 ```
 
-Attenzione! Prima di eseguire qualsiasi script leggerne la documentazione! Può essere richiesta la configurazione di alcuni parametri in modo che la l’attacco abbia successo
+Attenzione! Prima di eseguire qualsiasi script leggerne la documentazione! Può essere richiesta la configurazione di alcuni parametri in modo che l’attacco abbia successo
