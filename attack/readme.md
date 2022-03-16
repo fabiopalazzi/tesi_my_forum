@@ -12,8 +12,8 @@ Prima di eseguire gli attacchi:
 
 - All’interno della cartella attack digitare
 
-```Avviare il Backend vulnerabile
-cd vulnerable-back-end; docker-compose up;
+```Avviare il vulnerable-back-end
+docker-compose up;
 ```
 
 - All’interno della cartella attack digitare
