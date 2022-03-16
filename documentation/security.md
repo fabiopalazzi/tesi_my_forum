@@ -11,4 +11,4 @@ L’aspetto della sicurezza verrà nella stragrande maggioranza dei casi analizz
 
 Ad esempio per aggiungere un post invocheremo una chiamata POST al back-end all’url api/post. La richiesta conterrà nella header un token Bearer la cui validità verrà verificata dal server e che certifica l’autenticazione dell’utente. Conterrà inoltre nel body vari campi quali il titolo, la descrizione, l’argomento... del post da salvare.
 
-Dopo questo piccolo focus del funzionamento del backend possiamo intuire che è molto importante gestire accuratamente le richieste inviate per evitare problemi di sicurezza. Negli altri file inclusi nella cartella, sono presenti spiegazioni su alcuni attachi attuabili all’app.
+Dopo questo piccolo focus del funzionamento del backend possiamo intuire che è molto importante gestire accuratamente le richieste inviate per evitare problemi di sicurezza. Negli altri file inclusi nella cartella, sono presenti ulteriori spiegazioni su alcuni attachi attuabili all’app.
