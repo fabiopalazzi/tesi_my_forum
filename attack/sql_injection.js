@@ -31,10 +31,10 @@ var data = {
 axios.post( 'http://127.0.0.1:3001/api/user/register', data)
 .then( response => {
     if(response.status==200)
-        console.log("Executed")
+        console.log("2: Executed")
     })
 .catch( error => {
-    console.log(error.message)
+    console.log("2: " + error.message)
 })
 
 ///*** 3 ***////

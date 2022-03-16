@@ -13,7 +13,7 @@ Prima di eseguire gli attacchi:
 - All’interno della cartella vulnerable-back-end
 
 ```jsx
-docker-compose up;
+docker-compose up
 ```
 
 - All’interno della cartella attack digitare

@@ -5,13 +5,12 @@
 var axios = require('axios')
 
 //insert here valid token
-var token = 'b0df031c6e0e574e25140763d94c2d4e66d8afac98ec6ad5b03641de1f7528b46a27a5f6e9a3267ca66eb432baff9d11da6de1f0b1d7da1d0d4f0cdf09fbd0da'
+var token = ''
 
-
+//** 1 */
 //I put a danger content with script inside
 //With this script, every user that load this content, if has mouse over description, an alert
 //with his token session is shown 
-
 
 axios({
     method: 'post',
@@ -31,6 +30,7 @@ axios({
     console.log(error.message)
 })
 
+//** 2 */
 //On mouse over the danger item, i send an hide get request with token session as parameter
 //In back-end i add a new routes at url "steal_token" that accepts an http get with token stolen as url param
 //When attack runs (victim's mouse is over danger content), in the terminal of back-end, the token session of victim will be shown
