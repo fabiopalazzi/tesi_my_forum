@@ -4,16 +4,16 @@ Nelle versioni di V8 fornite con Node.js 0.8 e 0.10 è stata identificata una vu
 
 Per mitigare l'analisi JSON profonda, possiamo limitare la dimensione della stringa su cui analizzi
 
-Il module express fissa di default una dimensione massima di una richiesta ad 1MB. Se una richiesta supera tale valore, il modulo invierà un’eccezione al server (PayloadTooLargeError)
+Il module body-parser fissa di default una dimensione massima di una richiesta a 100KB. Se una richiesta supera tale valore, il modulo invierà un’eccezione al server (PayloadTooLargeError)
 
 ```jsx
-// 1 MB = 1024^2 = 1048576
+// 100KB = 2^10 * 100 BYTE = 102 400 BYTE
 var a = ''
 for(var i=0; i<5000;i++)
   a+= 'bfbfbfbfbfbffbfbfbff'
 var myJSONObject = { "pwd":"b", "mail":a };
-//size: 21 (header e altri campi) + 100 000 (campo mail) = 100 021 
-// 100 021 < 104 576 OK
+//size: 21 (header e altri campi) + (circa) 100 000 = 100 021 
+// 100 021 < 102 400  OK
 axios.post('http://127.0.0.1:3000/api/user/auth', myJSONObject)
 .then(response => {
   assert.equal(200, 200)
@@ -25,7 +25,7 @@ var a = ''
     for(var i=0; i<5500;i++)
       a+= 'bfbfbfbfbfbffbfbfbff'
     var myJSONObject = { "pwd":"b", "mail":a };
-// 21 + 5500 * 20 = 110 021 > 104 576 ERROR
+// 21 + 5500 * 20 = 110 021 > 102 400 ERROR
     axios.post('http://127.0.0.1:3000/api/user/auth', myJSONObject)
     .then(response => {
       assert.equal(200, 200)
